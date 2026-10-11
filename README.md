@@ -1,7 +1,7 @@
 # Mundane — An Open-Source AI Field Investigator
 
 > **Tagline:** *"The world is full of things you've never really noticed."*  
-> **Mission:** *"We built AI to help people pay attention to the world, not pay more attention to their screens."*  
+> **Mission:** *"I built AI to help people pay attention to the world, not pay more attention to their screens."*  
 > **Event:** Hacktoberfest 2026 Open-Source AI Challenge (Week 1 Submission)  
 > **License:** Apache 2.0  
 
