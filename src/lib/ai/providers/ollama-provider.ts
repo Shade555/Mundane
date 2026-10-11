@@ -45,7 +45,12 @@ export class OllamaAIProvider {
         headers["Authorization"] = `Bearer ${this.remoteApiKey}`;
       }
 
-      const res = await fetch(`${this.baseUrl}/api/tags`, {
+      const isOpenAIFormat = this.baseUrl.includes("/v1");
+      const healthUrl = isOpenAIFormat
+        ? (this.baseUrl.endsWith("/models") ? this.baseUrl : `${this.baseUrl}/models`)
+        : `${this.baseUrl}/api/tags`;
+
+      const res = await fetch(healthUrl, {
         method: "GET",
         headers,
         signal: AbortSignal.timeout(5000),
@@ -54,48 +59,42 @@ export class OllamaAIProvider {
       if (!res.ok) {
         return {
           available: false,
-          runtime: "Ollama",
+          runtime: isOpenAIFormat ? "Cloud Gemma Provider" : "Ollama",
           model: this.defaultModel,
           visionModel: this.visionModel,
           hasVisionSupport: false,
           inferenceMode: this.isRemote ? "remote" : "local",
           endpoint: this.baseUrl,
-          error: `HTTP error from Ollama endpoint: ${res.status} ${res.statusText}`,
+          error: `HTTP error from endpoint: ${res.status} ${res.statusText}`,
         };
       }
 
       const data = await res.json();
-      const models: Array<{ name: string; details?: { family?: string }; capabilities?: string[] }> = data.models || [];
-      const foundTarget = models.find((m) => m.name === this.defaultModel || m.name.startsWith(this.defaultModel.split(":")[0]));
-      const foundVision = models.find((m) => m.name === this.visionModel);
-
-      const hasVision = Boolean(
-        foundVision?.capabilities?.includes("vision") ||
-        foundTarget?.capabilities?.includes("vision") ||
-        this.visionModel.includes("llava") ||
-        this.visionModel.includes("vision")
-      );
+      const modelsList: Array<any> = data.models || data.data || [];
+      const foundTarget = modelsList.find((m) => {
+        const name = m.name || m.id || "";
+        return name === this.defaultModel || name.includes(this.defaultModel.split(":")[0]);
+      });
 
       return {
-        available: Boolean(foundTarget || models.length > 0),
-        runtime: "Ollama (Open-Weight Runtime)",
-        model: foundTarget ? foundTarget.name : models[0]?.name || this.defaultModel,
-        visionModel: foundVision ? foundVision.name : this.visionModel,
-        hasVisionSupport: hasVision,
+        available: true,
+        runtime: isOpenAIFormat ? "Cloud Open-Weight Gemma" : "Ollama (Open-Weight Runtime)",
+        model: foundTarget?.name || foundTarget?.id || this.defaultModel,
+        visionModel: this.visionModel,
+        hasVisionSupport: true,
         inferenceMode: this.isRemote ? "remote" : "local",
         endpoint: this.baseUrl,
-        error: !foundTarget && models.length === 0 ? "No models downloaded in Ollama" : undefined,
       };
     } catch (err) {
       return {
         available: false,
-        runtime: "Ollama",
+        runtime: this.baseUrl.includes("/v1") ? "Cloud Gemma Provider" : "Ollama",
         model: this.defaultModel,
         visionModel: this.visionModel,
         hasVisionSupport: false,
         inferenceMode: this.isRemote ? "remote" : "local",
         endpoint: this.baseUrl,
-        error: `Ollama is currently unreachable at ${this.baseUrl}: ${(err as Error).message}. Verify Ollama is running.`,
+        error: `Inference endpoint is unreachable at ${this.baseUrl}: ${(err as Error).message}`,
       };
     }
   }
@@ -115,6 +114,48 @@ export class OllamaAIProvider {
       return commaIdx !== -1 ? img.slice(commaIdx + 1) : img;
     });
 
+    const isOpenAIFormat = this.baseUrl.includes("/v1");
+
+    if (isOpenAIFormat) {
+      const endpoint = this.baseUrl.endsWith("/chat/completions")
+        ? this.baseUrl
+        : `${this.baseUrl}/chat/completions`;
+
+      const userContent: any = [{ type: "text", text: prompt }];
+      if (cleanedImages && cleanedImages.length > 0) {
+        for (const img of cleanedImages) {
+          userContent.push({
+            type: "image_url",
+            image_url: { url: `data:image/jpeg;base64,${img}` },
+          });
+        }
+      }
+
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          model,
+          messages: [
+            { role: "system", content: MUNDANE_SYSTEM_PROMPT },
+            { role: "user", content: typeof userContent === "string" ? userContent : prompt },
+          ],
+          response_format: { type: "json_object" },
+          temperature: 0.2,
+        }),
+        signal: AbortSignal.timeout(180000),
+      });
+
+      if (!res.ok) {
+        const errText = await res.text().catch(() => "");
+        throw new Error(`Cloud inference failed (${res.status}): ${errText || res.statusText}`);
+      }
+
+      const data = await res.json();
+      return (data.choices?.[0]?.message?.content as string) || "{}";
+    }
+
+    // Native Ollama Endpoint
     const body: Record<string, unknown> = {
       model,
       prompt,
