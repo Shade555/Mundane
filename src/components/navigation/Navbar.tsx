@@ -12,6 +12,13 @@ export function Navbar() {
   const [outdoorMode, setOutdoorMode] = useState<boolean>(false);
 
   useEffect(() => {
+    const savedDark = typeof window !== "undefined" && localStorage.getItem("mundane_dark_mode") === "true";
+    if (savedDark) {
+      setOutdoorMode(true);
+      document.documentElement.classList.add("dark");
+      document.body.classList.add("outdoor-mode", "dark");
+    }
+
     fetch("/api/ai/health")
       .then((r) => r.json())
       .then((data) => setModelStatus(data))
@@ -32,10 +39,15 @@ export function Navbar() {
   const toggleOutdoorMode = () => {
     const next = !outdoorMode;
     setOutdoorMode(next);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("mundane_dark_mode", next ? "true" : "false");
+    }
     if (next) {
-      document.body.classList.add("outdoor-mode");
+      document.documentElement.classList.add("dark");
+      document.body.classList.add("outdoor-mode", "dark");
     } else {
-      document.body.classList.remove("outdoor-mode");
+      document.documentElement.classList.remove("dark");
+      document.body.classList.remove("outdoor-mode", "dark");
     }
   };
 

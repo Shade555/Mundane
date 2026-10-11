@@ -21,23 +21,184 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Outdoor High-Contrast Mode */
-.outdoor-mode {
-  background-color: #000000 !important;
+/* Outdoor & Dark Mode Overrides */
+body.outdoor-mode,
+body.dark,
+html.dark body {
+  background-color: #0E110F !important;
+  color: #F0F2F0 !important;
+}
+
+/* Header & Navbar */
+body.outdoor-mode header,
+body.dark header {
+  background-color: rgba(14, 17, 15, 0.95) !important;
+  border-color: #272E29 !important;
+  color: #F0F2F0 !important;
+}
+
+body.outdoor-mode header .text-forest,
+body.dark header .text-forest {
+  color: #8FD1A8 !important;
+}
+
+body.outdoor-mode header .text-stone-500,
+body.dark header .text-stone-500 {
+  color: #9DA09C !important;
+}
+
+body.outdoor-mode header a.text-charcoal-600,
+body.dark header a.text-charcoal-600 {
+  color: #B5B8B5 !important;
+}
+
+body.outdoor-mode header a.text-charcoal-600:hover,
+body.dark header a.text-charcoal-600:hover {
+  background-color: #212723 !important;
   color: #FFFFFF !important;
 }
 
-.outdoor-mode .outdoor-card {
-  background-color: #121513 !important;
-  border-color: #38423B !important;
+/* Mobile Bottom Nav */
+body.outdoor-mode nav.md\:hidden,
+body.dark nav.md\:hidden {
+  background-color: #0E110F !important;
+  border-color: #272E29 !important;
+}
+
+body.outdoor-mode nav.md\:hidden a,
+body.dark nav.md\:hidden a {
+  color: #9DA09C !important;
+}
+
+body.outdoor-mode nav.md\:hidden a.text-forest-700,
+body.dark nav.md\:hidden a.text-forest-700 {
+  color: #8FD1A8 !important;
+}
+
+/* Footer */
+body.outdoor-mode footer,
+body.dark footer {
+  background-color: #0A0C0B !important;
+  border-color: #202622 !important;
+  color: #8A8F8B !important;
+}
+
+/* Cards & Containers */
+body.outdoor-mode .paper-card,
+body.dark .paper-card,
+body.outdoor-mode .outdoor-card,
+body.dark .outdoor-card {
+  background-color: #171B18 !important;
+  border-color: #2A322D !important;
+  color: #F0F2F0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+body.outdoor-mode .paper-card-active,
+body.dark .paper-card-active {
+  border-color: #4A7A5E !important;
+}
+
+/* Any white backgrounds & cards */
+body.outdoor-mode .bg-white,
+body.dark .bg-white {
+  background-color: #1A1F1B !important;
+  border-color: #2E3731 !important;
+  color: #F0F2F0 !important;
+}
+
+/* Form Inputs, Textareas & Selects */
+body.outdoor-mode input,
+body.dark input,
+body.outdoor-mode textarea,
+body.dark textarea,
+body.outdoor-mode select,
+body.dark select {
+  background-color: #131714 !important;
+  border-color: #364039 !important;
   color: #FFFFFF !important;
+}
+
+body.outdoor-mode input::placeholder,
+body.dark input::placeholder,
+body.outdoor-mode textarea::placeholder,
+body.dark textarea::placeholder {
+  color: #7A827C !important;
+}
+
+/* Paper Palette Dark Mappings */
+body.outdoor-mode .bg-paper-50,
+body.dark .bg-paper-50,
+body.outdoor-mode .bg-paper-100,
+body.dark .bg-paper-100,
+body.outdoor-mode .bg-paper-200,
+body.dark .bg-paper-200 {
+  background-color: #141715 !important;
+}
+
+body.outdoor-mode .border-paper-300,
+body.dark .border-paper-300,
+body.outdoor-mode .border-paper-200,
+body.dark .border-paper-200 {
+  border-color: #2A322D !important;
+}
+
+/* Text Adaptations */
+body.outdoor-mode .text-charcoal-900,
+body.dark .text-charcoal-900,
+body.outdoor-mode .text-charcoal-800,
+body.dark .text-charcoal-800,
+body.outdoor-mode .text-charcoal-700,
+body.dark .text-charcoal-700 {
+  color: #F5F7F5 !important;
+}
+
+body.outdoor-mode .text-charcoal-600,
+body.dark .text-charcoal-600,
+body.outdoor-mode .text-charcoal-500,
+body.dark .text-charcoal-500 {
+  color: #C2C7C3 !important;
+}
+
+body.outdoor-mode .text-stone-700,
+body.dark .text-stone-700,
+body.outdoor-mode .text-stone-600,
+body.dark .text-stone-600,
+body.outdoor-mode .text-stone-500,
+body.dark .text-stone-500 {
+  color: #A0A6A1 !important;
+}
+
+body.outdoor-mode .text-forest-700,
+body.dark .text-forest-700,
+body.outdoor-mode .text-forest-800,
+body.dark .text-forest-800,
+body.outdoor-mode .text-forest-900,
+body.dark .text-forest-900 {
+  color: #7DBA95 !important;
+}
+
+body.outdoor-mode .bg-forest-100,
+body.dark .bg-forest-100 {
+  background-color: #1A3324 !important;
+  color: #A4E0BD !important;
+}
+
+body.outdoor-mode .hover\:bg-paper-200:hover,
+body.dark .hover\:bg-paper-200:hover {
+  background-color: #222924 !important;
+}
+
+body.outdoor-mode .hover\:bg-paper-300:hover,
+body.dark .hover\:bg-paper-300:hover {
+  background-color: #2A332D !important;
 }
 
 .outdoor-mode .outdoor-text-muted {
   color: #D1D5DB !important;
 }
 
-/* Subtle editorial paper styling */
+/* Standard subtle editorial paper styling */
 .paper-card {
   background: #FFFFFF;
   border: 1px solid #EBE4DC;

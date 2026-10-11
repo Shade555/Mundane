@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col font-sans bg-paper-100 text-charcoal-800 antialiased pb-16 md:pb-0">
+      <body className="min-h-screen flex flex-col font-sans bg-paper-100 text-charcoal-800 antialiased pb-16 md:pb-0 transition-colors">
         <Navbar />
         <main className="flex-1">{children}</main>
         <footer className="border-t border-paper-300 bg-paper-200/50 py-6 text-center text-xs text-stone-500 font-mono">
