@@ -18,7 +18,8 @@ import {
   X,
 } from "lucide-react";
 import { InvestigationCategory, DifficultyLevel, EnvironmentalContext, Investigation } from "@/lib/types/investigation";
-import { storageAdapter } from "../../../lib/db/storage-adapter";
+import { storageAdapter } from "@/lib/db";
+import { generateUUID } from "@/lib/utils/uuid";
 
 const CATEGORIES: Array<{ id: InvestigationCategory; label: string; icon: string }> = [
   { id: "botany_plants", label: "Botany & Wild Flora", icon: "🌱" },
@@ -118,7 +119,7 @@ function NewInvestigationForm() {
       const generated = await response.json();
 
       // Build complete investigation domain object
-      const investigationId = "inv_" + Math.random().toString(36).substring(2, 10);
+      const investigationId = generateUUID();
       const newInvestigation: Investigation = {
         id: investigationId,
         title: generated.title,
@@ -131,8 +132,8 @@ function NewInvestigationForm() {
         difficulty,
         safetyConsiderations: generated.safetyConsiderations,
         status: "in_progress",
-        hypotheses: generated.initialHypotheses.map((h: string, idx: number) => ({
-          id: `hyp_${idx + 1}`,
+        hypotheses: generated.initialHypotheses.map((h: string) => ({
+          id: generateUUID(),
           investigationId,
           statement: h,
           source: "ai",

@@ -28,7 +28,8 @@ import {
   Hypothesis,
   ObservationAnalysis,
 } from "@/lib/types/investigation";
-import { storageAdapter } from "../../../lib/db/storage-adapter";
+import { storageAdapter } from "@/lib/db";
+import { generateUUID } from "@/lib/utils/uuid";
 
 export default function FieldInvestigationPage({
   params,
@@ -140,7 +141,7 @@ export default function FieldInvestigationPage({
       }
 
       const newObs: FieldObservation = {
-        id: "obs_" + Math.random().toString(36).substring(2, 9),
+        id: generateUUID(),
         investigationId: investigation.id,
         stepNumber: currentStep.step,
         prompt: currentStep.instruction,
@@ -167,7 +168,7 @@ export default function FieldInvestigationPage({
   const handleAddUserHypothesis = async () => {
     if (!customHypothesis.trim()) return;
     const newHyp: Hypothesis = {
-      id: "hyp_" + Math.random().toString(36).substring(2, 9),
+      id: generateUUID(),
       investigationId: investigation.id,
       statement: customHypothesis.trim(),
       source: "user",
