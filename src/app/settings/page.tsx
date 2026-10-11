@@ -14,8 +14,8 @@ import {
   BookOpen,
 } from "lucide-react";
 import { AIModelStatus } from "@/lib/types/investigation";
-import { storageAdapter } from "@/lib/db";
-import { MUNDANE_SYSTEM_PROMPT } from "@/lib/ai/prompts/investigation-prompts";
+import { storageAdapter } from "../../lib/db/storage-adapter";
+import { MUNDANE_SYSTEM_PROMPT } from "../../lib/ai/prompts/investigation-prompts";
 
 export default function SettingsAndPromptsPage() {
   const [status, setStatus] = useState<AIModelStatus | null>(null);

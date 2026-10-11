@@ -28,7 +28,7 @@ import {
   Hypothesis,
   ObservationAnalysis,
 } from "@/lib/types/investigation";
-import { storageAdapter } from "@/lib/db";
+import { storageAdapter } from "../../../lib/db/storage-adapter";
 
 export default function FieldInvestigationPage({
   params,

@@ -14,7 +14,7 @@ import {
   Search,
 } from "lucide-react";
 import { Investigation } from "@/lib/types/investigation";
-import { storageAdapter } from "@/lib/db";
+import { storageAdapter } from "../../lib/db/storage-adapter";
 
 export default function FieldJournalIndexPage() {
   const [investigations, setInvestigations] = useState<Investigation[]>([]);

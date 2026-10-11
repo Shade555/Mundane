@@ -21,7 +21,7 @@ import {
   FileText,
 } from "lucide-react";
 import { Investigation, ConclusionStatus } from "@/lib/types/investigation";
-import { storageAdapter } from "@/lib/db";
+import { storageAdapter } from "../../../lib/db/storage-adapter";
 
 export default function FieldJournalDetailPage({
   params,

@@ -18,7 +18,7 @@ import {
   X,
 } from "lucide-react";
 import { InvestigationCategory, DifficultyLevel, EnvironmentalContext, Investigation } from "@/lib/types/investigation";
-import { storageAdapter } from "@/lib/db";
+import { storageAdapter } from "../../../lib/db/storage-adapter";
 
 const CATEGORIES: Array<{ id: InvestigationCategory; label: string; icon: string }> = [
   { id: "botany_plants", label: "Botany & Wild Flora", icon: "🌱" },
