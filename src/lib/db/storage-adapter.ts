@@ -1,5 +1,5 @@
 import { Investigation, FieldObservation, Hypothesis, ConclusionStatus } from "@/lib/types/investigation";
-import { supabase, isSupabaseConfigured } from "@/lib/db/supabase-client";
+import { supabase, isSupabaseConfigured } from "./supabase-client";
 
 const LOCAL_STORAGE_KEY = "mundane_investigations_v1";
 

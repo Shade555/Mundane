@@ -16,7 +16,7 @@ import {
   Layers,
 } from "lucide-react";
 import { Investigation, AIModelStatus } from "@/lib/types/investigation";
-import { storageAdapter } from "@/lib/db/storage-adapter";
+import { storageAdapter } from "@/lib/db";
 
 const CURATED_IDEAS = [
   {

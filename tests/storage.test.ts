@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { storageAdapter } from "@/lib/db/storage-adapter";
+import { storageAdapter } from "@/lib/db";
 import { Investigation, FieldObservation, Hypothesis } from "@/lib/types/investigation";
 
 describe("Storage Adapter Persistence Tests", () => {
