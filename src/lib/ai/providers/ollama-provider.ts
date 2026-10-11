@@ -59,7 +59,7 @@ export class OllamaAIProvider {
       if (!res.ok) {
         return {
           available: false,
-          runtime: isOpenAIFormat ? "Cloud Gemma Provider" : "Ollama",
+          runtime: isOpenAIFormat ? "Cloud Open-Weight Provider" : "Ollama",
           model: this.defaultModel,
           visionModel: this.visionModel,
           hasVisionSupport: false,
@@ -78,7 +78,7 @@ export class OllamaAIProvider {
 
       return {
         available: true,
-        runtime: isOpenAIFormat ? "Cloud Open-Weight Gemma" : "Ollama (Open-Weight Runtime)",
+        runtime: isOpenAIFormat ? "Cloud Open-Weight Provider" : "Ollama (Open-Weight Runtime)",
         model: foundTarget?.name || foundTarget?.id || this.defaultModel,
         visionModel: this.visionModel,
         hasVisionSupport: true,
@@ -138,7 +138,7 @@ export class OllamaAIProvider {
           model,
           messages: [
             { role: "system", content: MUNDANE_SYSTEM_PROMPT },
-            { role: "user", content: typeof userContent === "string" ? userContent : prompt },
+            { role: "user", content: cleanedImages && cleanedImages.length > 0 ? userContent : prompt },
           ],
           response_format: { type: "json_object" },
           temperature: 0.2,
